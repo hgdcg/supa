@@ -222,7 +222,6 @@ create table Orders (
    GoodID               int                  not null,
    MarketID             int                  not null,
    UserId               int                  not null,
-   Amount               int                  null,
    IsPayed              bit                  null,
    constraint PK_ORDERS primary key nonclustered (GoodID, MarketID, UserId)
 )
