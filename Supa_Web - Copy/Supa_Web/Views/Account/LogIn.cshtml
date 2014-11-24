@@ -1,0 +1,21 @@
+﻿@model Supa_Web.Models.LogInModel
+
+@{
+    ViewBag.Title = "登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.LabelFor(model => model.UserName)
+        @Html.EditorFor(model => model.UserName)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
+    </p>
+    <p>
+        <input type="submit" value="LogIn" />
+    </p>
+}
