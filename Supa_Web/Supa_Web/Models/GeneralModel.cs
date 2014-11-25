@@ -10,9 +10,11 @@ namespace Supa_Web.Models
         public GeneralModel()
         {
             LogInState = false;
-            UserName = String.Empty;
+            User = new User();
+            User.UserName = String.Empty;
         }
         public Boolean LogInState { set; get; }
         public String UserName { set; get; }
+        public User User { set; get; }
     }
 }
