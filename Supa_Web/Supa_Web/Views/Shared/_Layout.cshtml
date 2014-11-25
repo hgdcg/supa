@@ -8,6 +8,20 @@
 
 <body>
     <div>
+        @if (ViewBag.LogInState)
+        {
+            @Html.ActionLink("欢迎，" + (String)ViewBag.UserName, "Account", "Account");
+            @Html.ActionLink("注销", "LogOff", "Account");
+        }
+        else
+        {
+            @Html.ActionLink("登录", "LogIn", "Account");
+            @Html.ActionLink("注册", "Register", "Account");
+        }
+    </div>
+    <div>
+    </div>
+    <div>
         @RenderBody()
     </div>
 </body>

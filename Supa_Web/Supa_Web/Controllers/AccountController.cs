@@ -16,7 +16,12 @@ namespace Supa_Web.Controllers
         [AllowAnonymous]
         public ActionResult LogIn()
         {
-            return View();
+            LogInModel model = new LogInModel();
+            if (TempData["LogInModel"] != null)
+            {
+                model = (LogInModel)TempData["LogInModel"];
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -35,8 +40,12 @@ namespace Supa_Web.Controllers
                                 where user.Password == model.Password
                                 && user.UserName == model.UserName
                                 select user;
-                    if (query.Count()==1)
+                    if (query.Count() == 1)
                     {
+                        IndexModel indexModel = new IndexModel();
+                        indexModel.LogInState = true;
+                        indexModel.UserName = model.UserName;
+                        TempData["IndexModel"] = indexModel;
                         return RedirectToAction("Index", "Home");
                     }
                     return View();

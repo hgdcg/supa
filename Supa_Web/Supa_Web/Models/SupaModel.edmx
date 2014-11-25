@@ -4,24 +4,23 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="supaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="supaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Goods">
           <Key>
             <PropertyRef Name="GoodID" />
           </Key>
-          <Property Name="GoodID" Type="int" Nullable="false" />
-          <Property Name="Class3" Type="char" MaxLength="256" />
-          <Property Name="GoodName" Type="char" MaxLength="256" />
+          <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
+          <Property Name="Class3" Type="char" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="GoodID" />
             <PropertyRef Name="MarketID" />
           </Key>
-          <Property Name="GoodID" Type="int" Nullable="false" />
+          <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="MarketID" Type="int" Nullable="false" />
           <Property Name="Location" Type="char" MaxLength="256" />
-          <Property Name="Discount" Type="int" />
+          <Property Name="Discount" Type="float" />
           <Property Name="Remaining" Type="int" />
           <Property Name="Price" Type="float" />
         </EntityType>
@@ -40,7 +39,7 @@
             <PropertyRef Name="MarketID" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="GoodID" Type="int" Nullable="false" />
+          <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="MarketID" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Amount" Type="int" />
@@ -75,7 +74,6 @@
             <PropertyRef Name="Class3" />
           </Key>
           <Property Name="Class3" Type="char" MaxLength="256" Nullable="false" />
-          <Property Name="GoodId" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -85,8 +83,8 @@
           <Property Name="UserName" Type="char" MaxLength="256" />
           <Property Name="Password" Type="char" MaxLength="256" />
         </EntityType>
-        <Association Name="FK_GOODS_UNDERTYPE_TYPES3">
-          <End Role="Types3" Type="Self.Types3" Multiplicity="0..1" />
+        <Association Name="FK_GOODS_UNDER_TYPES3">
+          <End Role="Types3" Type="Self.Types3" Multiplicity="1" />
           <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types3">
@@ -181,7 +179,7 @@
           <EntitySet Name="Types2" EntityType="Self.Types2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Types3" EntityType="Self.Types3" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_GOODS_UNDERTYPE_TYPES3" Association="Self.FK_GOODS_UNDERTYPE_TYPES3">
+          <AssociationSet Name="FK_GOODS_UNDER_TYPES3" Association="Self.FK_GOODS_UNDER_TYPES3">
             <End Role="Types3" EntitySet="Types3" />
             <End Role="Goods" EntitySet="Goods" />
           </AssociationSet>
@@ -210,7 +208,8 @@
             <End Role="Types3" EntitySet="Types3" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="supaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -218,10 +217,9 @@
           <Key>
             <PropertyRef Name="GoodID" />
           </Key>
-          <Property Name="GoodID" Type="Int32" Nullable="false" />
-          <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="GoodName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Types3" Relationship="Self.FK_GOODS_UNDERTYPE_TYPES3" FromRole="Goods" ToRole="Types3" />
+          <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Types3" Relationship="Self.FK_GOODS_UNDER_TYPES3" FromRole="Goods" ToRole="Types3" />
           <NavigationProperty Name="Inventories" Relationship="Self.FK_INVENTOR_RELATIONS_GOODS" FromRole="Goods" ToRole="Inventory" />
         </EntityType>
         <EntityType Name="Inventory">
@@ -229,10 +227,10 @@
             <PropertyRef Name="GoodID" />
             <PropertyRef Name="MarketID" />
           </Key>
-          <Property Name="GoodID" Type="Int32" Nullable="false" />
+          <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="MarketID" Type="Int32" Nullable="false" />
           <Property Name="Location" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="Discount" Type="Int32" />
+          <Property Name="Discount" Type="Double" />
           <Property Name="Remaining" Type="Int32" />
           <Property Name="Price" Type="Double" />
           <NavigationProperty Name="Good" Relationship="Self.FK_INVENTOR_RELATIONS_GOODS" FromRole="Inventory" ToRole="Goods" />
@@ -255,7 +253,7 @@
             <PropertyRef Name="MarketID" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="GoodID" Type="Int32" Nullable="false" />
+          <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="MarketID" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" />
@@ -295,8 +293,7 @@
             <PropertyRef Name="Class3" />
           </Key>
           <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="GoodId" Type="Int32" />
-          <NavigationProperty Name="Goods" Relationship="Self.FK_GOODS_UNDERTYPE_TYPES3" FromRole="Types3" ToRole="Goods" />
+          <NavigationProperty Name="Goods" Relationship="Self.FK_GOODS_UNDER_TYPES3" FromRole="Types3" ToRole="Goods" />
           <NavigationProperty Name="Types2" Relationship="Self.FK_TYPES3_BELONGTO__TYPES2" FromRole="Types3" ToRole="Types2" />
         </EntityType>
         <EntityType Name="User">
@@ -308,8 +305,8 @@
           <Property Name="Password" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_ORDERS_RELATIONS_USERS" FromRole="Users" ToRole="Orders" />
         </EntityType>
-        <Association Name="FK_GOODS_UNDERTYPE_TYPES3">
-          <End Role="Types3" Type="Self.Types3" Multiplicity="0..1" />
+        <Association Name="FK_GOODS_UNDER_TYPES3">
+          <End Role="Types3" Type="Self.Types3" Multiplicity="1" />
           <End Role="Goods" Type="Self.Good" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types3">
@@ -404,7 +401,7 @@
           <EntitySet Name="Types2" EntityType="Self.Types2" />
           <EntitySet Name="Types3" EntityType="Self.Types3" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_GOODS_UNDERTYPE_TYPES3" Association="Self.FK_GOODS_UNDERTYPE_TYPES3">
+          <AssociationSet Name="FK_GOODS_UNDER_TYPES3" Association="Self.FK_GOODS_UNDER_TYPES3">
             <End Role="Types3" EntitySet="Types3" />
             <End Role="Goods" EntitySet="Goods" />
           </AssociationSet>
@@ -444,7 +441,6 @@
               <MappingFragment StoreEntitySet="Goods">
                 <ScalarProperty Name="GoodID" ColumnName="GoodID" />
                 <ScalarProperty Name="Class3" ColumnName="Class3" />
-                <ScalarProperty Name="GoodName" ColumnName="GoodName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -512,7 +508,6 @@
             <EntityTypeMapping TypeName="supaModel.Types3">
               <MappingFragment StoreEntitySet="Types3">
                 <ScalarProperty Name="Class3" ColumnName="Class3" />
-                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,14 +1,14 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     11/23/2014 10:10:25                          */
+/* Created on:     11/24/2014 22:35:22                          */
 /*==============================================================*/
 
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('Goods') and o.name = 'FK_GOODS_UNDERTYPE_TYPES3')
+   where r.fkeyid = object_id('Goods') and o.name = 'FK_GOODS_UNDER_TYPES3')
 alter table Goods
-   drop constraint FK_GOODS_UNDERTYPE_TYPES3
+   drop constraint FK_GOODS_UNDER_TYPES3
 go
 
 if exists (select 1
@@ -56,10 +56,10 @@ go
 if exists (select 1
             from  sysindexes
            where  id    = object_id('Goods')
-            and   name  = 'UnderType_FK'
+            and   name  = 'Under_FK'
             and   indid > 0
             and   indid < 255)
-   drop index Goods.UnderType_FK
+   drop index Goods.Under_FK
 go
 
 if exists (select 1
@@ -158,17 +158,16 @@ go
 /* Table: Goods                                                 */
 /*==============================================================*/
 create table Goods (
-   GoodID               int                  not null,
-   Class3               char(256)            null,
-   GoodName             char(256)            null,
+   GoodID               char(256)            not null,
+   Class3               char(256)            not null,
    constraint PK_GOODS primary key nonclustered (GoodID)
 )
 go
 
 /*==============================================================*/
-/* Index: UnderType_FK                                          */
+/* Index: Under_FK                                              */
 /*==============================================================*/
-create index UnderType_FK on Goods (
+create index Under_FK on Goods (
 Class3 ASC
 )
 go
@@ -177,10 +176,10 @@ go
 /* Table: Inventory                                             */
 /*==============================================================*/
 create table Inventory (
-   GoodID               int                  not null,
+   GoodID               char(256)            not null,
    MarketID             int                  not null,
    Location             char(256)            null,
-   Discount             int                  null,
+   Discount             float                null,
    Remaining            int                  null,
    Price                float                null,
    constraint PK_INVENTORY primary key nonclustered (GoodID, MarketID)
@@ -219,9 +218,10 @@ go
 /* Table: Orders                                                */
 /*==============================================================*/
 create table Orders (
-   GoodID               int                  not null,
+   GoodID               char(256)            not null,
    MarketID             int                  not null,
    UserId               int                  not null,
+   Amount               int                  null,
    IsPayed              bit                  null,
    constraint PK_ORDERS primary key nonclustered (GoodID, MarketID, UserId)
 )
@@ -269,7 +269,6 @@ go
 /*==============================================================*/
 create table Types3 (
    Class3               char(256)            not null,
-   GoodId               int                  null,
    constraint PK_TYPES3 primary key nonclustered (Class3)
 )
 go
@@ -286,7 +285,7 @@ create table Users (
 go
 
 alter table Goods
-   add constraint FK_GOODS_UNDERTYPE_TYPES3 foreign key (Class3)
+   add constraint FK_GOODS_UNDER_TYPES3 foreign key (Class3)
       references Types3 (Class3)
 go
 

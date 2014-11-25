@@ -19,10 +19,10 @@ namespace Supa_Web.Models
             this.Orders = new HashSet<Order>();
         }
     
-        public int GoodID { get; set; }
+        public string GoodID { get; set; }
         public int MarketID { get; set; }
         public string Location { get; set; }
-        public Nullable<int> Discount { get; set; }
+        public Nullable<double> Discount { get; set; }
         public Nullable<int> Remaining { get; set; }
         public Nullable<double> Price { get; set; }
     

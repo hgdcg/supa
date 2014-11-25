@@ -19,9 +19,8 @@ namespace Supa_Web.Models
             this.Inventories = new HashSet<Inventory>();
         }
     
-        public int GoodID { get; set; }
+        public string GoodID { get; set; }
         public string Class3 { get; set; }
-        public string GoodName { get; set; }
     
         public virtual Types3 Types3 { get; set; }
         public virtual ICollection<Inventory> Inventories { get; set; }

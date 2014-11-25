@@ -5,25 +5,24 @@ using System.Web;
 
 namespace Supa_Web.Models
 {
-    public class LogInModel
+    public class LogInModel : GeneralModel
     {
         public String UserName { get; set; }
         public String Password { get; set; }
-        public Boolean RememberMe { get; set; }
     }
 
-    public class ChangePasswordModel
+    public class ChangePasswordModel : GeneralModel
     {
         public String OldPassword { get; set; }
         public String NewPassword { get; set; }
     }
 
-    public class RegisterModel
+    public class RegisterModel : GeneralModel
     {
         public String UserName { get; set; }
         public String Password { get; set; }
     }
-    public class SetPasswordModel
+    public class SetPasswordModel : GeneralModel
     {
         public String Password { get; set; }
     }

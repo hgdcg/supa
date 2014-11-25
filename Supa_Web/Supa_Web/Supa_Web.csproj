@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\GeneralModel.cs" />
     <Compile Include="Models\Good.cs">
       <DependentUpon>SupaModel.tt</DependentUpon>
     </Compile>
@@ -250,6 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\General\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
