@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bc8b55258b43400c8cd14e0408171d76" Name="Diagram1">
+      <Diagram DiagramId="9a487ebffc9b47879eb811a577683876" Name="Diagram1">
         <EntityTypeShape EntityType="supaModel.Good" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Inventory" Width="1.5" PointX="9.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="supaModel.Market" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="supaModel.Market" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Order" Width="1.5" PointX="12" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="supaModel.Types1" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="supaModel.Types1" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Types2" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Types3" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.User" Width="1.5" PointX="9.75" PointY="5.5" IsExpanded="true" />
@@ -19,8 +19,8 @@
         <AssociationConnector Association="supaModel.FK_INVENTOR_RELATIONS_MARKETS" ManuallyRouted="false" />
         <AssociationConnector Association="supaModel.FK_ORDERS_RELATIONS_INVENTOR" ManuallyRouted="false" />
         <AssociationConnector Association="supaModel.FK_ORDERS_RELATIONS_USERS" ManuallyRouted="false" />
-        <AssociationConnector Association="supaModel.FK_TYPES2_BELONGTO__TYPES1" ManuallyRouted="false" />
-        <AssociationConnector Association="supaModel.FK_TYPES3_BELONGTO__TYPES2" ManuallyRouted="false" />
+        <AssociationConnector Association="supaModel.FK_TYPES2_BELONG_TO_TYPES1" ManuallyRouted="false" />
+        <AssociationConnector Association="supaModel.FK_TYPES3_BELONG_TO_TYPES2" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Supa_Web.Models
 {
-    public class IndexModel : GeneralModel
+    public class IndexModel
     {
     }
 }

@@ -6,17 +6,18 @@ using System.Web;
 
 namespace Supa_Web.Models
 {
-    public class LogInModel : GeneralModel
+    public class LogInModel
     {
         public String UserName { get; set; }
         public String Password { get; set; }
     }
 
-    public class CartModel : GeneralModel
+    public class CartModel
     {
         public CartModel()
         {
             CurrentPage = 1;
+            PageLength = 15;
             Orders = new List<Order>();
         }
         public int CurrentPage { get; set; }
@@ -25,19 +26,9 @@ namespace Supa_Web.Models
         public List<Order> Orders { get; set; }
     }
 
-    public class ChangePasswordModel : GeneralModel
-    {
-        public String OldPassword { get; set; }
-        public String NewPassword { get; set; }
-    }
-
-    public class RegisterModel : GeneralModel
+    public class RegisterModel
     {
         public String UserName { get; set; }
-        public String Password { get; set; }
-    }
-    public class SetPasswordModel : GeneralModel
-    {
         public String Password { get; set; }
     }
 }

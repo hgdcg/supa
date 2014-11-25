@@ -1,8 +1,18 @@
-﻿
+﻿@model Supa_Web.Models.CartModel
+
 @{
     ViewBag.Title = "购物车";
+    ViewBag.LogInState = Session["LogInState"];
+    ViewBag.User = Session["User"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>购物车</h2>
 
+<ul>
+    @foreach(var order in Model.Orders){
+        <li>
+            @order.GoodID
+        </li>
+    }
+</ul>

@@ -19,7 +19,6 @@ namespace Supa_Web.Models
             this.Inventories = new HashSet<Inventory>();
         }
     
-        public int MarketID { get; set; }
         public string MarketName { get; set; }
         public string MarketAdd { get; set; }
         public Nullable<int> MarketEst { get; set; }

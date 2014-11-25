@@ -20,6 +20,7 @@ namespace Supa_Web.Models
         }
     
         public string Class3 { get; set; }
+        public string Class2 { get; set; }
     
         public virtual ICollection<Good> Goods { get; set; }
         public virtual Types2 Types2 { get; set; }

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     11/24/2014 22:35:22                          */
+/* Created on:     11/25/2014 19:02:20                          */
 /*==============================================================*/
 
 
@@ -41,16 +41,16 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('Types2') and o.name = 'FK_TYPES2_BELONGTO__TYPES1')
+   where r.fkeyid = object_id('Types2') and o.name = 'FK_TYPES2_BELONG_TO_TYPES1')
 alter table Types2
-   drop constraint FK_TYPES2_BELONGTO__TYPES1
+   drop constraint FK_TYPES2_BELONG_TO_TYPES1
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('Types3') and o.name = 'FK_TYPES3_BELONGTO__TYPES2')
+   where r.fkeyid = object_id('Types3') and o.name = 'FK_TYPES3_BELONG_TO_TYPES2')
 alter table Types3
-   drop constraint FK_TYPES3_BELONGTO__TYPES2
+   drop constraint FK_TYPES3_BELONG_TO_TYPES2
 go
 
 if exists (select 1
@@ -134,10 +134,28 @@ if exists (select 1
 go
 
 if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Types2')
+            and   name  = 'Belong_To_1_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Types2.Belong_To_1_FK
+go
+
+if exists (select 1
             from  sysobjects
            where  id = object_id('Types2')
             and   type = 'U')
    drop table Types2
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Types3')
+            and   name  = 'Belong_To_2_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Types3.Belong_To_2_FK
 go
 
 if exists (select 1
@@ -159,7 +177,7 @@ go
 /*==============================================================*/
 create table Goods (
    GoodID               char(256)            not null,
-   Class3               char(256)            not null,
+   Class3               char(256)            null,
    constraint PK_GOODS primary key nonclustered (GoodID)
 )
 go
@@ -177,12 +195,12 @@ go
 /*==============================================================*/
 create table Inventory (
    GoodID               char(256)            not null,
-   MarketID             int                  not null,
+   MarketName           char(256)            not null,
    Location             char(256)            null,
    Discount             float                null,
    Remaining            int                  null,
    Price                float                null,
-   constraint PK_INVENTORY primary key nonclustered (GoodID, MarketID)
+   constraint PK_INVENTORY primary key nonclustered (GoodID, MarketName)
 )
 go
 
@@ -190,7 +208,7 @@ go
 /* Index: Relationship_5_FK                                     */
 /*==============================================================*/
 create index Relationship_5_FK on Inventory (
-MarketID ASC
+MarketName ASC
 )
 go
 
@@ -206,11 +224,10 @@ go
 /* Table: Markets                                               */
 /*==============================================================*/
 create table Markets (
-   MarketID             int                  not null,
-   MarketName           char(256)            null,
+   MarketName           char(256)            not null,
    MarketAdd            char(256)            null,
    MarketEst            int                  null,
-   constraint PK_MARKETS primary key nonclustered (MarketID)
+   constraint PK_MARKETS primary key nonclustered (MarketName)
 )
 go
 
@@ -219,11 +236,11 @@ go
 /*==============================================================*/
 create table Orders (
    GoodID               char(256)            not null,
-   MarketID             int                  not null,
+   MarketName           char(256)            not null,
    UserId               int                  not null,
    Amount               int                  null,
    IsPayed              bit                  null,
-   constraint PK_ORDERS primary key nonclustered (GoodID, MarketID, UserId)
+   constraint PK_ORDERS primary key nonclustered (GoodID, MarketName, UserId)
 )
 go
 
@@ -240,7 +257,7 @@ go
 /*==============================================================*/
 create index Relationship_9_FK on Orders (
 GoodID ASC,
-MarketID ASC
+MarketName ASC
 )
 go
 
@@ -249,7 +266,6 @@ go
 /*==============================================================*/
 create table Types1 (
    Class1               char(256)            not null,
-   Class2               char(256)            null,
    constraint PK_TYPES1 primary key nonclustered (Class1)
 )
 go
@@ -259,8 +275,16 @@ go
 /*==============================================================*/
 create table Types2 (
    Class2               char(256)            not null,
-   Class3               char(256)            null,
+   Class1               char(256)            null,
    constraint PK_TYPES2 primary key nonclustered (Class2)
+)
+go
+
+/*==============================================================*/
+/* Index: Belong_To_1_FK                                        */
+/*==============================================================*/
+create index Belong_To_1_FK on Types2 (
+Class1 ASC
 )
 go
 
@@ -269,7 +293,16 @@ go
 /*==============================================================*/
 create table Types3 (
    Class3               char(256)            not null,
+   Class2               char(256)            not null,
    constraint PK_TYPES3 primary key nonclustered (Class3)
+)
+go
+
+/*==============================================================*/
+/* Index: Belong_To_2_FK                                        */
+/*==============================================================*/
+create index Belong_To_2_FK on Types3 (
+Class2 ASC
 )
 go
 
@@ -290,8 +323,8 @@ alter table Goods
 go
 
 alter table Inventory
-   add constraint FK_INVENTOR_RELATIONS_MARKETS foreign key (MarketID)
-      references Markets (MarketID)
+   add constraint FK_INVENTOR_RELATIONS_MARKETS foreign key (MarketName)
+      references Markets (MarketName)
 go
 
 alter table Inventory
@@ -305,17 +338,17 @@ alter table Orders
 go
 
 alter table Orders
-   add constraint FK_ORDERS_RELATIONS_INVENTOR foreign key (GoodID, MarketID)
-      references Inventory (GoodID, MarketID)
+   add constraint FK_ORDERS_RELATIONS_INVENTOR foreign key (GoodID, MarketName)
+      references Inventory (GoodID, MarketName)
 go
 
 alter table Types2
-   add constraint FK_TYPES2_BELONGTO__TYPES1 foreign key (Class2)
+   add constraint FK_TYPES2_BELONG_TO_TYPES1 foreign key (Class1)
       references Types1 (Class1)
 go
 
 alter table Types3
-   add constraint FK_TYPES3_BELONGTO__TYPES2 foreign key (Class3)
+   add constraint FK_TYPES3_BELONG_TO_TYPES2 foreign key (Class2)
       references Types2 (Class2)
 go
 

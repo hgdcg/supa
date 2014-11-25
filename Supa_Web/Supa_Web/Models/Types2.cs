@@ -14,10 +14,15 @@ namespace Supa_Web.Models
     
     public partial class Types2
     {
+        public Types2()
+        {
+            this.Types3 = new HashSet<Types3>();
+        }
+    
         public string Class2 { get; set; }
-        public string Class3 { get; set; }
+        public string Class1 { get; set; }
     
         public virtual Types1 Types1 { get; set; }
-        public virtual Types3 Types3 { get; set; }
+        public virtual ICollection<Types3> Types3 { get; set; }
     }
 }

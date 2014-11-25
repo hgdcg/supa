@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "主页";
-    ViewBag.LogInState = Model.LogInState;
-    ViewBag.UserName = Model.User.UserName;
+    ViewBag.LogInState = Session["LogInState"];
+    ViewBag.User = Session["User"];
 }
 @Html.ActionLink("我的账户", "Account", "Account")
 @Html.ActionLink("购物车", "Cart", "Account")

@@ -42,12 +42,13 @@ namespace Supa_Web.Controllers
                                 select user;
                     if (query.Count() == 1)
                     {
-                        User user = query.ElementAt<User>(0);
-                        IndexModel indexModel = new IndexModel();
-                        indexModel.LogInState = true;
-                        indexModel.User = user;
-                        TempData["IndexModel"] = indexModel;
-                        return RedirectToAction("Index", "Home");
+                        // In fact there is only one user here.
+                        foreach (User user in query)
+                        {
+                            Session["User"] = user;
+                            Session["LogInState"] = true;
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     return View();
                 }
@@ -55,23 +56,32 @@ namespace Supa_Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Cart()
         {
-            CartModel model = new CartModel();
-            if (TempData["LogInModel"] != null)
+
+            if (Session["User"] == null)
             {
-                model = (CartModel)TempData["LogInModel"];
+                return RedirectToAction("Index", "Home");
             }
+            CartModel model = new CartModel();
+            if (TempData["CartModel"] != null)
+            {
+                model = (CartModel)TempData["CartModel"];
+            }
+
+            User user = (User)Session["User"];
 
             using (var db = new Entities())
             {
                 var query = from order in db.Orders
-                            where order.User.UserId == model.User.UserId
+                            where order.User.UserId == user.UserId
+                            orderby order.GoodID
                             select order;
                 model.PageNumber = (int)(query.Count() / model.PageLength + 1);
-                query = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
+                var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
                 model.Orders.Clear();
-                foreach (Order order in query)
+                foreach (Order order in result)
                 {
                     model.Orders.Add(order);
                 }

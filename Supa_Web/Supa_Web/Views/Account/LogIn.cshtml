@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "登录";
-    ViewBag.LogInState = Model.LogInState;
-    ViewBag.UserName = Model.User.UserName;
+    ViewBag.LogInState = Session["LogInState"];
+    ViewBag.User = Session["User"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

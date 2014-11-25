@@ -15,7 +15,7 @@ namespace Supa_Web.Models
     public partial class Order
     {
         public string GoodID { get; set; }
-        public int MarketID { get; set; }
+        public string MarketName { get; set; }
         public int UserId { get; set; }
         public Nullable<int> Amount { get; set; }
         public Nullable<bool> IsPayed { get; set; }

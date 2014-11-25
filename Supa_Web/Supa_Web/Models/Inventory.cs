@@ -20,7 +20,7 @@ namespace Supa_Web.Models
         }
     
         public string GoodID { get; set; }
-        public int MarketID { get; set; }
+        public string MarketName { get; set; }
         public string Location { get; set; }
         public Nullable<double> Discount { get; set; }
         public Nullable<int> Remaining { get; set; }

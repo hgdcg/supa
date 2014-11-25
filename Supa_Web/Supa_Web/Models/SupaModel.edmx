@@ -10,15 +10,15 @@
             <PropertyRef Name="GoodID" />
           </Key>
           <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
-          <Property Name="Class3" Type="char" MaxLength="256" Nullable="false" />
+          <Property Name="Class3" Type="char" MaxLength="256" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="GoodID" />
-            <PropertyRef Name="MarketID" />
+            <PropertyRef Name="MarketName" />
           </Key>
           <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
-          <Property Name="MarketID" Type="int" Nullable="false" />
+          <Property Name="MarketName" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="Location" Type="char" MaxLength="256" />
           <Property Name="Discount" Type="float" />
           <Property Name="Remaining" Type="int" />
@@ -26,21 +26,20 @@
         </EntityType>
         <EntityType Name="Markets">
           <Key>
-            <PropertyRef Name="MarketID" />
+            <PropertyRef Name="MarketName" />
           </Key>
-          <Property Name="MarketID" Type="int" Nullable="false" />
-          <Property Name="MarketName" Type="char" MaxLength="256" />
+          <Property Name="MarketName" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="MarketAdd" Type="char" MaxLength="256" />
           <Property Name="MarketEst" Type="int" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="GoodID" />
-            <PropertyRef Name="MarketID" />
+            <PropertyRef Name="MarketName" />
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
-          <Property Name="MarketID" Type="int" Nullable="false" />
+          <Property Name="MarketName" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Amount" Type="int" />
           <Property Name="IsPayed" Type="bit" />
@@ -60,20 +59,20 @@
             <PropertyRef Name="Class1" />
           </Key>
           <Property Name="Class1" Type="char" MaxLength="256" Nullable="false" />
-          <Property Name="Class2" Type="char" MaxLength="256" />
         </EntityType>
         <EntityType Name="Types2">
           <Key>
             <PropertyRef Name="Class2" />
           </Key>
           <Property Name="Class2" Type="char" MaxLength="256" Nullable="false" />
-          <Property Name="Class3" Type="char" MaxLength="256" />
+          <Property Name="Class1" Type="char" MaxLength="256" />
         </EntityType>
         <EntityType Name="Types3">
           <Key>
             <PropertyRef Name="Class3" />
           </Key>
           <Property Name="Class3" Type="char" MaxLength="256" Nullable="false" />
+          <Property Name="Class2" Type="char" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -84,7 +83,7 @@
           <Property Name="Password" Type="char" MaxLength="256" />
         </EntityType>
         <Association Name="FK_GOODS_UNDER_TYPES3">
-          <End Role="Types3" Type="Self.Types3" Multiplicity="1" />
+          <End Role="Types3" Type="Self.Types3" Multiplicity="0..1" />
           <End Role="Goods" Type="Self.Goods" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types3">
@@ -112,10 +111,10 @@
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Markets">
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Principal>
             <Dependent Role="Inventory">
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -125,11 +124,11 @@
           <ReferentialConstraint>
             <Principal Role="Inventory">
               <PropertyRef Name="GoodID" />
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="GoodID" />
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -145,27 +144,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TYPES2_BELONGTO__TYPES1">
-          <End Role="Types1" Type="Self.Types1" Multiplicity="1" />
-          <End Role="Types2" Type="Self.Types2" Multiplicity="0..1" />
+        <Association Name="FK_TYPES2_BELONG_TO_TYPES1">
+          <End Role="Types1" Type="Self.Types1" Multiplicity="0..1" />
+          <End Role="Types2" Type="Self.Types2" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types1">
               <PropertyRef Name="Class1" />
             </Principal>
             <Dependent Role="Types2">
-              <PropertyRef Name="Class2" />
+              <PropertyRef Name="Class1" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TYPES3_BELONGTO__TYPES2">
+        <Association Name="FK_TYPES3_BELONG_TO_TYPES2">
           <End Role="Types2" Type="Self.Types2" Multiplicity="1" />
-          <End Role="Types3" Type="Self.Types3" Multiplicity="0..1" />
+          <End Role="Types3" Type="Self.Types3" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types2">
               <PropertyRef Name="Class2" />
             </Principal>
             <Dependent Role="Types3">
-              <PropertyRef Name="Class3" />
+              <PropertyRef Name="Class2" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -199,11 +198,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_TYPES2_BELONGTO__TYPES1" Association="Self.FK_TYPES2_BELONGTO__TYPES1">
+          <AssociationSet Name="FK_TYPES2_BELONG_TO_TYPES1" Association="Self.FK_TYPES2_BELONG_TO_TYPES1">
             <End Role="Types1" EntitySet="Types1" />
             <End Role="Types2" EntitySet="Types2" />
           </AssociationSet>
-          <AssociationSet Name="FK_TYPES3_BELONGTO__TYPES2" Association="Self.FK_TYPES3_BELONGTO__TYPES2">
+          <AssociationSet Name="FK_TYPES3_BELONG_TO_TYPES2" Association="Self.FK_TYPES3_BELONG_TO_TYPES2">
             <End Role="Types2" EntitySet="Types2" />
             <End Role="Types3" EntitySet="Types3" />
           </AssociationSet>
@@ -218,17 +217,17 @@
             <PropertyRef Name="GoodID" />
           </Key>
           <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Types3" Relationship="Self.FK_GOODS_UNDER_TYPES3" FromRole="Goods" ToRole="Types3" />
           <NavigationProperty Name="Inventories" Relationship="Self.FK_INVENTOR_RELATIONS_GOODS" FromRole="Goods" ToRole="Inventory" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="GoodID" />
-            <PropertyRef Name="MarketID" />
+            <PropertyRef Name="MarketName" />
           </Key>
           <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="MarketID" Type="Int32" Nullable="false" />
+          <Property Name="MarketName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Location" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="Discount" Type="Double" />
           <Property Name="Remaining" Type="Int32" />
@@ -239,10 +238,9 @@
         </EntityType>
         <EntityType Name="Market">
           <Key>
-            <PropertyRef Name="MarketID" />
+            <PropertyRef Name="MarketName" />
           </Key>
-          <Property Name="MarketID" Type="Int32" Nullable="false" />
-          <Property Name="MarketName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="MarketName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="MarketAdd" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="MarketEst" Type="Int32" />
           <NavigationProperty Name="Inventories" Relationship="Self.FK_INVENTOR_RELATIONS_MARKETS" FromRole="Markets" ToRole="Inventory" />
@@ -250,11 +248,11 @@
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="GoodID" />
-            <PropertyRef Name="MarketID" />
+            <PropertyRef Name="MarketName" />
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="MarketID" Type="Int32" Nullable="false" />
+          <Property Name="MarketName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" />
           <Property Name="IsPayed" Type="Boolean" />
@@ -276,25 +274,25 @@
             <PropertyRef Name="Class1" />
           </Key>
           <Property Name="Class1" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Class2" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Types2" Relationship="Self.FK_TYPES2_BELONGTO__TYPES1" FromRole="Types1" ToRole="Types2" />
+          <NavigationProperty Name="Types2" Relationship="Self.FK_TYPES2_BELONG_TO_TYPES1" FromRole="Types1" ToRole="Types2" />
         </EntityType>
         <EntityType Name="Types2">
           <Key>
             <PropertyRef Name="Class2" />
           </Key>
           <Property Name="Class2" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Types1" Relationship="Self.FK_TYPES2_BELONGTO__TYPES1" FromRole="Types2" ToRole="Types1" />
-          <NavigationProperty Name="Types3" Relationship="Self.FK_TYPES3_BELONGTO__TYPES2" FromRole="Types2" ToRole="Types3" />
+          <Property Name="Class1" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Types1" Relationship="Self.FK_TYPES2_BELONG_TO_TYPES1" FromRole="Types2" ToRole="Types1" />
+          <NavigationProperty Name="Types3" Relationship="Self.FK_TYPES3_BELONG_TO_TYPES2" FromRole="Types2" ToRole="Types3" />
         </EntityType>
         <EntityType Name="Types3">
           <Key>
             <PropertyRef Name="Class3" />
           </Key>
           <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Class2" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Goods" Relationship="Self.FK_GOODS_UNDER_TYPES3" FromRole="Types3" ToRole="Goods" />
-          <NavigationProperty Name="Types2" Relationship="Self.FK_TYPES3_BELONGTO__TYPES2" FromRole="Types3" ToRole="Types2" />
+          <NavigationProperty Name="Types2" Relationship="Self.FK_TYPES3_BELONG_TO_TYPES2" FromRole="Types3" ToRole="Types2" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -306,7 +304,7 @@
           <NavigationProperty Name="Orders" Relationship="Self.FK_ORDERS_RELATIONS_USERS" FromRole="Users" ToRole="Orders" />
         </EntityType>
         <Association Name="FK_GOODS_UNDER_TYPES3">
-          <End Role="Types3" Type="Self.Types3" Multiplicity="1" />
+          <End Role="Types3" Type="Self.Types3" Multiplicity="0..1" />
           <End Role="Goods" Type="Self.Good" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types3">
@@ -334,10 +332,10 @@
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Markets">
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Principal>
             <Dependent Role="Inventory">
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -347,11 +345,11 @@
           <ReferentialConstraint>
             <Principal Role="Inventory">
               <PropertyRef Name="GoodID" />
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="GoodID" />
-              <PropertyRef Name="MarketID" />
+              <PropertyRef Name="MarketName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -367,27 +365,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TYPES2_BELONGTO__TYPES1">
-          <End Role="Types1" Type="Self.Types1" Multiplicity="1" />
-          <End Role="Types2" Type="Self.Types2" Multiplicity="0..1" />
+        <Association Name="FK_TYPES2_BELONG_TO_TYPES1">
+          <End Role="Types1" Type="Self.Types1" Multiplicity="0..1" />
+          <End Role="Types2" Type="Self.Types2" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types1">
               <PropertyRef Name="Class1" />
             </Principal>
             <Dependent Role="Types2">
-              <PropertyRef Name="Class2" />
+              <PropertyRef Name="Class1" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TYPES3_BELONGTO__TYPES2">
+        <Association Name="FK_TYPES3_BELONG_TO_TYPES2">
           <End Role="Types2" Type="Self.Types2" Multiplicity="1" />
-          <End Role="Types3" Type="Self.Types3" Multiplicity="0..1" />
+          <End Role="Types3" Type="Self.Types3" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Types2">
               <PropertyRef Name="Class2" />
             </Principal>
             <Dependent Role="Types3">
-              <PropertyRef Name="Class3" />
+              <PropertyRef Name="Class2" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -421,11 +419,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_TYPES2_BELONGTO__TYPES1" Association="Self.FK_TYPES2_BELONGTO__TYPES1">
+          <AssociationSet Name="FK_TYPES2_BELONG_TO_TYPES1" Association="Self.FK_TYPES2_BELONG_TO_TYPES1">
             <End Role="Types1" EntitySet="Types1" />
             <End Role="Types2" EntitySet="Types2" />
           </AssociationSet>
-          <AssociationSet Name="FK_TYPES3_BELONGTO__TYPES2" Association="Self.FK_TYPES3_BELONGTO__TYPES2">
+          <AssociationSet Name="FK_TYPES3_BELONG_TO_TYPES2" Association="Self.FK_TYPES3_BELONG_TO_TYPES2">
             <End Role="Types2" EntitySet="Types2" />
             <End Role="Types3" EntitySet="Types3" />
           </AssociationSet>
@@ -448,7 +446,7 @@
             <EntityTypeMapping TypeName="supaModel.Inventory">
               <MappingFragment StoreEntitySet="Inventory">
                 <ScalarProperty Name="GoodID" ColumnName="GoodID" />
-                <ScalarProperty Name="MarketID" ColumnName="MarketID" />
+                <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Remaining" ColumnName="Remaining" />
@@ -459,7 +457,6 @@
           <EntitySetMapping Name="Markets">
             <EntityTypeMapping TypeName="supaModel.Market">
               <MappingFragment StoreEntitySet="Markets">
-                <ScalarProperty Name="MarketID" ColumnName="MarketID" />
                 <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="MarketAdd" ColumnName="MarketAdd" />
                 <ScalarProperty Name="MarketEst" ColumnName="MarketEst" />
@@ -470,7 +467,7 @@
             <EntityTypeMapping TypeName="supaModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="GoodID" ColumnName="GoodID" />
-                <ScalarProperty Name="MarketID" ColumnName="MarketID" />
+                <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="IsPayed" ColumnName="IsPayed" />
@@ -492,7 +489,6 @@
             <EntityTypeMapping TypeName="supaModel.Types1">
               <MappingFragment StoreEntitySet="Types1">
                 <ScalarProperty Name="Class1" ColumnName="Class1" />
-                <ScalarProperty Name="Class2" ColumnName="Class2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -500,7 +496,7 @@
             <EntityTypeMapping TypeName="supaModel.Types2">
               <MappingFragment StoreEntitySet="Types2">
                 <ScalarProperty Name="Class2" ColumnName="Class2" />
-                <ScalarProperty Name="Class3" ColumnName="Class3" />
+                <ScalarProperty Name="Class1" ColumnName="Class1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -508,6 +504,7 @@
             <EntityTypeMapping TypeName="supaModel.Types3">
               <MappingFragment StoreEntitySet="Types3">
                 <ScalarProperty Name="Class3" ColumnName="Class3" />
+                <ScalarProperty Name="Class2" ColumnName="Class2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

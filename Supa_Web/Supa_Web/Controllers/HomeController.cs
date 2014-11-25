@@ -18,6 +18,11 @@ namespace Supa_Web.Controllers
             {
                 model = (IndexModel)TempData["IndexModel"];
             }
+            if (Session["LogInState"] == null)
+            {
+                Session["LogInState"] = false;
+            }
+
             return View(model);
         }
 

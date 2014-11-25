@@ -10,7 +10,7 @@
     <div>
         @if (ViewBag.LogInState)
         {
-            @Html.ActionLink("欢迎，" + (String)ViewBag.UserName, "Account", "Account");
+            @Html.ActionLink("欢迎，" + (String)ViewBag.User.UserName, "Account", "Account");
             @Html.ActionLink("注销", "LogOff", "Account");
         }
         else
