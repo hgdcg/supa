@@ -18,11 +18,13 @@ namespace Supa_Web.Models
         {
             CurrentPage = 1;
             PageLength = 5;
+            TotalAmount = 0;
             Orders = new List<Order>();
         }
         public int CurrentPage { get; set; }
         public int PageLength { get; set; }
         public int PageNumber { get; set; }
+        public double TotalAmount { get; set; }
         public List<Order> Orders { get; set; }
     }
 

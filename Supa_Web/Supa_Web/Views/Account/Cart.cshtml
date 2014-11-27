@@ -8,6 +8,7 @@
 }
 
 <h2>购物车</h2>
+<h3>总金额：@Model.TotalAmount</h3>
 
 <ul>
     @foreach (var order in Model.Orders)
@@ -19,6 +20,15 @@
                 </li>
                 <li>
                     数量：@order.Amount
+                </li>
+                @if (order.Amount != 1)
+                {
+                    <li>
+                        @Html.ActionLink("数量减一", "ChangeOrderNumber", "Account", new { Plus = false, GoodName = @order.GoodID }, null)
+                    </li>
+                }
+                <li>
+                    @Html.ActionLink("数量加一", "ChangeOrderNumber", "Account", new { Plus = true, GoodName = @order.GoodID }, null)
                 </li>
                 <li>
                     @Html.ActionLink("删除", "CartDelete", "Account", new { GoodName = @order.GoodID }, null)
