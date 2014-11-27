@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Supa_Web.Models
 {
     public class LogInModel
     {
+        [Required(ErrorMessage="用户名不能为空")]
         public String UserName { get; set; }
+        [Required(ErrorMessage="密码不能为空")]
         public String Password { get; set; }
     }
 

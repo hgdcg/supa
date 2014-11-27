@@ -12,10 +12,12 @@
     <p>
         @Html.LabelFor(model => model.UserName, "用户名")
         @Html.EditorFor(model => model.UserName)
+        @Html.ValidationMessageFor(model=>model.UserName)
     </p>
     <p>
         @Html.LabelFor(model => model.Password, "密码")
         @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model=>model.Password)
     </p>
     <p>
         <input type="submit" value="登录" />
