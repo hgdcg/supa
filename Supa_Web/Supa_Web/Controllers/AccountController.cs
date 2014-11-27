@@ -23,7 +23,6 @@ namespace Supa_Web.Controllers
             }
             return View(model);
         }
-
         [HttpPost]
         [AllowAnonymous]
         public ActionResult LogIn(LogInModel model)
@@ -32,27 +31,76 @@ namespace Supa_Web.Controllers
             {
                 return View();
             }
-            else
+            using (var db = new Entities())
             {
-                using (var db = new Entities())
+                var query = from user in db.Users
+                            where user.Password == model.Password
+                            && user.UserName == model.UserName
+                            select user;
+                if (query.Count() > 0)
                 {
-                    var query = from user in db.Users
-                                where user.Password == model.Password
-                                && user.UserName == model.UserName
-                                select user;
-                    if (query.Count() == 1)
+                    // In fact there is only one user here.
+                    foreach (User user in query)
                     {
-                        // In fact there is only one user here.
-                        foreach (User user in query)
-                        {
-                            Session["User"] = user;
-                            Session["LogInState"] = true;
-                            return RedirectToAction("Index", "Home");
-                        }
+                        Session["User"] = user;
+                        Session["LogInState"] = true;
+                        return RedirectToAction("Index", "Home");
                     }
-                    return View();
                 }
+                return View();
             }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult LogOff()
+        {
+            Session["User"] = null;
+            Session["LogInState"] = false;
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            RegisterModel model = new RegisterModel();
+            if (TempData["RegisterModel"] != null)
+            {
+                model = (RegisterModel)TempData["RegisterModel"];
+            }
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            using (var db = new Entities())
+            {
+                User newUser = new User();
+                newUser.UserName = model.UserName;
+                newUser.Password = model.Password;
+                db.Users.Add(newUser);
+                db.SaveChanges();
+
+                // Now fetch this new user from DB
+                var query = from user in db.Users
+                            where user.UserName == model.UserName
+                            orderby -user.UserId
+                            select user;
+                foreach (var user in query)
+                {
+                    newUser = (User)user;
+                    break;
+                }
+                Session["User"] = newUser;
+                Session["LogInState"] = true;
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

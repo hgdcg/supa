@@ -1,8 +1,29 @@
-﻿
+﻿@model Supa_Web.Models.RegisterModel
+
 @{
     ViewBag.Title = "注册";
+    ViewBag.LogInState = Session["LogInState"];
+    ViewBag.User = Session["User"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Register</h2>
+<h2>注册</h2>
 
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.LabelFor(model => model.UserName, "用户名")
+        @Html.EditorFor(model => model.UserName)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Password, "密码")
+        @Html.PasswordFor(model => model.Password)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.ConfirmPassword, "确认密码")
+        @Html.PasswordFor(model => model.ConfirmPassword)
+    </p>
+    <p>
+        <input type="submit" value="注册" />
+    </p>
+}

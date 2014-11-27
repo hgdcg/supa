@@ -32,5 +32,6 @@ namespace Supa_Web.Models
     {
         public String UserName { get; set; }
         public String Password { get; set; }
+        public String ConfirmPassword { get; set; }
     }
 }
