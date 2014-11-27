@@ -69,6 +69,10 @@ namespace Supa_Web.Controllers
             {
                 model = (CartModel)TempData["CartModel"];
             }
+            if (TempData["CartPage"] != null)
+            {
+                model.CurrentPage = (int)TempData["CartPage"];
+            }
 
             User user = (User)Session["User"];
 
@@ -87,7 +91,34 @@ namespace Supa_Web.Controllers
                 }
             }
 
+            TempData["CartPage"] = model.CurrentPage;
+            TempData["CartPageNumber"] = model.PageNumber;
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult CartFirstPage()
+        {
+            TempData["CartPage"] = 1;
+            return RedirectToAction("Cart", "Account");
+        }
+        [AllowAnonymous]
+        public ActionResult CartNextPage()
+        {
+            TempData["CartPage"] = (int)TempData["CartPage"] + 1;
+            return RedirectToAction("Cart", "Account");
+        }
+        [AllowAnonymous]
+        public ActionResult CartPreviousPage()
+        {
+            TempData["CartPage"] = (int)TempData["CartPage"] - 1;
+            return RedirectToAction("Cart", "Account");
+        }
+        [AllowAnonymous]
+        public ActionResult CartLastPage()
+        {
+            TempData["CartPage"] = TempData["CartPageNumber"];
+            return RedirectToAction("Cart", "Account");
         }
     }
 }

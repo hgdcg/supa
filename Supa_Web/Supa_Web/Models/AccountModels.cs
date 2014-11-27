@@ -17,7 +17,7 @@ namespace Supa_Web.Models
         public CartModel()
         {
             CurrentPage = 1;
-            PageLength = 15;
+            PageLength = 5;
             Orders = new List<Order>();
         }
         public int CurrentPage { get; set; }

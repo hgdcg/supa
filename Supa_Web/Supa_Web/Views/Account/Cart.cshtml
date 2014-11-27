@@ -10,9 +10,36 @@
 <h2>购物车</h2>
 
 <ul>
-    @foreach(var order in Model.Orders){
+    @foreach (var order in Model.Orders)
+    {
         <li>
             @order.GoodID
+        </li>
+    }
+</ul>
+<ul>
+    <li>
+        当前页数：@Model.CurrentPage
+    </li>
+    <li>
+        总页数：@Model.PageNumber
+    </li>
+    @if (@Model.CurrentPage != 1)
+    {
+        <li>
+            @Html.ActionLink("第一页", "CartFirstPage", "Account")
+        </li>
+        <li>
+            @Html.ActionLink("上一页", "CartPreviousPage", "Account")
+        </li>
+    }
+    @if (@Model.CurrentPage != @Model.PageNumber)
+    {
+        <li>
+            @Html.ActionLink("下一页", "CartNextPage", "Account")
+        </li>
+        <li>
+            @Html.ActionLink("最后一页", "CartLastPage", "Account")
         </li>
     }
 </ul>
