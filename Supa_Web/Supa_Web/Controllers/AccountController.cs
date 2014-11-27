@@ -82,7 +82,7 @@ namespace Supa_Web.Controllers
                             where order.User.UserId == user.UserId
                             orderby order.GoodID
                             select order;
-                model.PageNumber = (int)(query.Count() / model.PageLength + 1);
+                model.PageNumber = (int)Math.Ceiling((double)(query.Count() / model.PageLength));
                 var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
                 model.Orders.Clear();
                 foreach (Order order in result)
@@ -95,7 +95,6 @@ namespace Supa_Web.Controllers
             TempData["CartPageNumber"] = model.PageNumber;
             return View(model);
         }
-
         [AllowAnonymous]
         public ActionResult CartFirstPage()
         {
@@ -118,6 +117,26 @@ namespace Supa_Web.Controllers
         public ActionResult CartLastPage()
         {
             TempData["CartPage"] = TempData["CartPageNumber"];
+            return RedirectToAction("Cart", "Account");
+        }
+        [AllowAnonymous]
+        public ActionResult CartDelete(String GoodName)
+        {
+            User user = (User)Session["User"];
+
+            using (var db = new Entities())
+            {
+                var query = from order in db.Orders
+                            where order.UserId == user.UserId
+                            where order.GoodID == GoodName
+                            select order;
+                foreach (var order in query)
+                {
+                    db.Orders.Remove(order);
+                }
+                db.SaveChanges();
+            }
+            TempData["CartPage"] = 1;
             return RedirectToAction("Cart", "Account");
         }
     }

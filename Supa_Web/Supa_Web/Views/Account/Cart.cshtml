@@ -13,7 +13,17 @@
     @foreach (var order in Model.Orders)
     {
         <li>
-            @order.GoodID
+            <ul>
+                <li>
+                    商品名：@order.GoodID
+                </li>
+                <li>
+                    数量：@order.Amount
+                </li>
+                <li>
+                    @Html.ActionLink("删除", "CartDelete", "Account", new { GoodName = @order.GoodID }, null)
+                </li>
+            </ul>
         </li>
     }
 </ul>
