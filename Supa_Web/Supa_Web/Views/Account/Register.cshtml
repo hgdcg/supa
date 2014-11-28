@@ -14,14 +14,17 @@
     <p>
         @Html.LabelFor(model => model.UserName, "用户名")
         @Html.EditorFor(model => model.UserName)
+        @Html.ValidationMessageFor(model=>model.UserName)
     </p>
     <p>
         @Html.LabelFor(model => model.Password, "密码")
         @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model=>model.Password)
     </p>
     <p>
         @Html.LabelFor(model => model.ConfirmPassword, "确认密码")
         @Html.PasswordFor(model => model.ConfirmPassword)
+        @Html.ValidationMessageFor(model=>model.ConfirmPassword)
     </p>
     <p>
         <input type="submit" value="注册" />

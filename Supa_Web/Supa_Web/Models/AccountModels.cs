@@ -33,8 +33,11 @@ namespace Supa_Web.Models
 
     public class RegisterModel
     {
+        [Required(ErrorMessage="用户名不能为空")]
         public String UserName { get; set; }
+        [Required(ErrorMessage="密码不能为空")]
         public String Password { get; set; }
+        [Compare("Password", ErrorMessage="确认密码与密码不相符")]
         public String ConfirmPassword { get; set; }
     }
 }
