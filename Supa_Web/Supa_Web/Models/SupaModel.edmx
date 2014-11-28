@@ -10,6 +10,7 @@
             <PropertyRef Name="GoodID" />
           </Key>
           <Property Name="GoodID" Type="char" MaxLength="256" Nullable="false" />
+          <Property Name="GoodName" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="Class3" Type="char" MaxLength="256" />
         </EntityType>
         <EntityType Name="Inventory">
@@ -217,6 +218,7 @@
             <PropertyRef Name="GoodID" />
           </Key>
           <Property Name="GoodID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="GoodName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Class3" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Types3" Relationship="Self.FK_GOODS_UNDER_TYPES3" FromRole="Goods" ToRole="Types3" />
           <NavigationProperty Name="Inventories" Relationship="Self.FK_INVENTOR_RELATIONS_GOODS" FromRole="Goods" ToRole="Inventory" />
@@ -438,6 +440,7 @@
             <EntityTypeMapping TypeName="supaModel.Good">
               <MappingFragment StoreEntitySet="Goods">
                 <ScalarProperty Name="GoodID" ColumnName="GoodID" />
+                <ScalarProperty Name="GoodName" ColumnName="GoodName" />
                 <ScalarProperty Name="Class3" ColumnName="Class3" />
               </MappingFragment>
             </EntityTypeMapping>

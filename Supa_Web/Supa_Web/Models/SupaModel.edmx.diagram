@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9a487ebffc9b47879eb811a577683876" Name="Diagram1">
-        <EntityTypeShape EntityType="supaModel.Good" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+      <Diagram DiagramId="9afdbce58cc547a5a05efb270322cf61" Name="Diagram1">
+        <EntityTypeShape EntityType="supaModel.Good" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Inventory" Width="1.5" PointX="9.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Market" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="supaModel.Order" Width="1.5" PointX="12" PointY="1.125" IsExpanded="true" />

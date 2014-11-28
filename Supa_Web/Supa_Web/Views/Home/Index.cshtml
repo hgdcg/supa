@@ -5,9 +5,8 @@
     ViewBag.LogInState = Session["LogInState"];
     ViewBag.User = Session["User"];
 }
-@Html.ActionLink("我的账户", "Account", "Account")
 @Html.ActionLink("购物车", "Cart", "Account")
-@Html.ActionLink("全部商品", "Goods", "Home")
+@Html.ActionLink("全部商品", "GoodsList", "Home")
 <ul>
     @foreach (var types1 in Model.Types1)
     {
@@ -28,7 +27,7 @@
                                         <li>
                                             三级分类：@types3.Class3
                                         </li>
-                                }
+                                    }
                                 }
                             </ul>
                         </li>

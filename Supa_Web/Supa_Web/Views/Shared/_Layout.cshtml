@@ -12,6 +12,7 @@
         {
             @Html.ActionLink("欢迎，" + (String)ViewBag.User.UserName, "Account", "Account");
             @Html.ActionLink("注销", "LogOff", "Account");
+            @Html.ActionLink("我的账户", "Account", "Account")
         }
         else
         {

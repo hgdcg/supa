@@ -207,6 +207,12 @@
     <Content Include="Global.asax" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\metro-ui\fonts\metroSysIcons.woff" />
+    <Content Include="Content\metro-ui\fonts\metroSysIcons.ttf" />
+    <Content Include="Content\metro-ui\fonts\iconFont.woff" />
+    <Content Include="Content\metro-ui\fonts\iconFont.ttf" />
+    <Content Include="Content\metro-ui\fonts\iconFont.json" />
+    <Content Include="Content\metro-ui\fonts\iconFont.eot" />
     <EntityDeploy Include="Models\SupaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SupaModel.Designer.cs</LastGenOutput>
@@ -224,12 +230,6 @@
       <DependentUpon>SupaModel.edmx</DependentUpon>
       <LastGenOutput>SupaModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Content\metro-ui\fonts\metroSysIcons.woff" />
-    <Content Include="Content\metro-ui\fonts\metroSysIcons.ttf" />
-    <Content Include="Content\metro-ui\fonts\iconFont.woff" />
-    <Content Include="Content\metro-ui\fonts\iconFont.ttf" />
-    <Content Include="Content\metro-ui\fonts\iconFont.json" />
-    <Content Include="Content\metro-ui\fonts\iconFont.eot" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

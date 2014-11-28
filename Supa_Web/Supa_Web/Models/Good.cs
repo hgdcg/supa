@@ -20,6 +20,7 @@ namespace Supa_Web.Models
         }
     
         public string GoodID { get; set; }
+        public string GoodName { get; set; }
         public string Class3 { get; set; }
     
         public virtual Types3 Types3 { get; set; }

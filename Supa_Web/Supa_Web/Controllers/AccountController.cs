@@ -143,6 +143,7 @@ namespace Supa_Web.Controllers
                 foreach (Order order in result)
                 {
                     model.Orders.Add(order);
+                    model.GoodNames.Add(order.Inventory.Good.GoodName);
                 }
             }
 
@@ -214,6 +215,18 @@ namespace Supa_Web.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Cart", "Account");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
     }
 }

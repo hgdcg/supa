@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "我的账户";
+    ViewBag.Title = "账户管理";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>修改密码</h2>
+<h2>账户管理</h2>
 
+@Html.ActionLink("修改密码", "ChangePassword", "Account")
