@@ -4,8 +4,37 @@
     ViewBag.Title = "主页";
     ViewBag.LogInState = Session["LogInState"];
     ViewBag.User = Session["User"];
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.ActionLink("我的账户", "Account", "Account")
 @Html.ActionLink("购物车", "Cart", "Account")
 @Html.ActionLink("全部商品", "Goods", "Home")
+<ul>
+    @foreach (var types1 in Model.Types1)
+    {
+        <li>
+            一级分类：@types1.Class1
+            <ul>
+                @foreach (var types2 in Model.Types2)
+                {
+                    if (types2.Class1 == types1.Class1)
+                    {
+                        <li>
+                            二级分类：@types2.Class2
+                            <ul>
+                                @foreach (var types3 in Model.Types3)
+                                {
+                                    if (types3.Class2 == types2.Class2)
+                                    {
+                                        <li>
+                                            三级分类：@types3.Class3
+                                        </li>
+                                }
+                                }
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+</ul>

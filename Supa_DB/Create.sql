@@ -3,6 +3,14 @@
 /* Created on:     11/25/2014 19:02:20                          */
 /*==============================================================*/
 
+drop table Orders;
+drop table Users;
+drop table Inventory;
+drop table Markets;
+drop table Goods;
+drop table Types3;
+drop table Types2;
+drop table Types1;
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -177,6 +185,7 @@ go
 /*==============================================================*/
 create table Goods (
    GoodID               char(256)            not null,
+   GoodName             char(256)            not null,
    Class3               char(256)            null,
    constraint PK_GOODS primary key nonclustered (GoodID)
 )
