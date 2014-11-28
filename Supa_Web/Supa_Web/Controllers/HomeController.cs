@@ -51,7 +51,7 @@ namespace Supa_Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult GoodsList()
+        public ActionResult GoodsList(string class3)
         {
             GoodsListModel model = new GoodsListModel();
             if (TempData["GoodsListModel"] != null)
@@ -85,22 +85,33 @@ namespace Supa_Web.Controllers
                 {
                     model.Types3.Add(types3);
                 }
-
                 var query = from goods in db.Goods
+                                where goods.Class3 == class3
+                                orderby goods.GoodID
+                                select goods; 
+                if(class3==null)
+                {
+                     query = from goods in db.Goods                            
                             orderby goods.GoodID
                             select goods;
+                }              
                 model.PageNumber = (int)Math.Ceiling((double)(query.Count() / model.PageLength));
                 var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
                 model.Good.Clear();
                 foreach (Good goods in result)
                 {
                     model.Good.Add(goods);
+                    foreach (Inventory inventory in goods.Inventories)
+                    {
+                        model.Prices.Add((double)inventory.Price);
+                    }
                 }
             }
             TempData["GoodPage"] = model.CurrentPage;
             TempData["GoodPageNumber"] = model.PageNumber;
             return View(model);
         }
+      
         [AllowAnonymous]
         public ActionResult GoodFirstPage()
         {

@@ -22,8 +22,9 @@
                                     if (types3.Class2 == types2.Class2)
                                     {
                                         <li>
-                                            三级分类：@types3.Class3
+                                            三级分类：@Html.ActionLink(types3.Class3, "GoodsList", "Home", new { class3 = @types3.Class3 }, null)
                                         </li>
+
                                     }
                                 }
                             </ul>
@@ -35,12 +36,28 @@
     }
 </ul>
 <ul>
-@foreach (var goods in Model.Good)
+    @foreach (var goods in Model.Good)
     {
-    <li>
-        @goods.GoodName
-    </li>
-}
+        <li>
+            商品名称：@goods.GoodName
+        </li>
+        <li>
+            价格：@{
+        double price = 0;
+        string market= "USTC";
+        foreach (var inventory in @goods.Inventories)
+        {
+            price = (double)inventory.Price;
+            market = inventory.MarketName;
+        }
+            }
+            @price
+        </li>
+        <li>
+            
+           @Html.ActionLink(" 添加到购物车", "AddGood", "Account", new { GoodID = @goods.GoodID ,Market = @market}, null)
+        </li>
+    }
 </ul>
 <ul>
     <li>
@@ -77,7 +94,7 @@
 </head>
 <body>
     <div>
-    
+
     </div>
 </body>
 </html>

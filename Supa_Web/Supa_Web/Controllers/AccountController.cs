@@ -184,7 +184,7 @@ namespace Supa_Web.Controllers
             {
                 var query = from order in db.Orders
                             where order.UserId == user.UserId
-                            where order.GoodID == GoodName
+                            where order.Inventory.Good.GoodName == GoodName
                             select order;
                 foreach (var order in query)
                 {
@@ -216,7 +216,40 @@ namespace Supa_Web.Controllers
             }
             return RedirectToAction("Cart", "Account");
         }
-
+        [AllowAnonymous]
+        public ActionResult AddGood(String GoodID,string Market)
+        {
+            User user = (User)Session["User"];
+            if(user==null)
+            {
+                return RedirectToAction("Index", "Home"); 
+            }
+            var db = new Entities();
+            var query = from order in db.Orders
+                        where order.User.UserId == user.UserId 
+                        where order.GoodID == GoodID
+                        select order ;
+            if(query.Count()>0)
+            {
+             foreach(Order order in query)
+             {
+                 int temp = (int)order.Amount;
+                 order.Amount= temp+1;
+             }
+              
+            }
+            else
+            {
+            Order order = new Order();
+            order.GoodID = GoodID;
+            order.UserId = ((User)Session["User"]).UserId;
+            order.MarketName = Market;
+            order.Amount = 1;
+            db.Orders.Add(order);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Cart", "Account");
+        }
         [AllowAnonymous]
         [HttpGet]
         public ActionResult ChangePassword()

@@ -25,6 +25,7 @@ namespace Supa_Web.Models
             Types2 = new List<Types2>();
             Types3 = new List<Types3>();
             Good = new List<Good>();
+            Prices = new List<double>();
             CurrentPage = 1;
             PageLength = 5;
         }
@@ -32,6 +33,7 @@ namespace Supa_Web.Models
         public List<Types2> Types2 { get; set; }
         public List<Types3> Types3 { get; set; }
         public List<Good> Good { get; set; }
+        public List<double> Prices { get; set; }
         public int CurrentPage { get; set; }
         public int PageLength { get; set; }
         public int PageNumber { get; set; }
