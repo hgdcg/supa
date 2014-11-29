@@ -3,83 +3,97 @@
 @{
     ViewBag.Title = "商品列表";
     ViewBag.LogInState = Session["LogInState"];
-    ViewBag.User = Session["User"];}
-<ul>
-    @foreach (var types1 in Model.Types1)
-    {
-        <li>
-            一级分类：@types1.Class1
-            <ul>
-                @foreach (var types2 in Model.Types2)
-                {
-                    if (types2.Class1 == types1.Class1)
-                    {
-                        <li>
-                            二级分类：@types2.Class2
-                            <ul>
-                                @foreach (var types3 in Model.Types3)
-                                {
-                                    if (types3.Class2 == types2.Class2)
-                                    {
-                                        <li>
-                                            三级分类：@Html.ActionLink(types3.Class3, "GoodsList", "Home", new { allGoods="False", type3 = @types3.Class3 }, null)
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    }
-                }
-            </ul>
-        </li>
-    }
-</ul>
-<ul>
-    @foreach (var goods in Model.Good)
-    {
-        <li>
-            商品名称：@goods.GoodName
-        </li>
-        <li>
-            价格：@{
-        double price = 0;
-        string market = "USTC";
-        foreach (var inventory in @goods.Inventories)
+    ViewBag.User = Session["User"];
+}
+
+<div class="col-md-3 column">
+    <div class="list-group">
+        @foreach (var types1 in Model.Types1)
         {
-            price = (double)inventory.Price;
-            market = inventory.MarketName;
+        <div class="list-group-item dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">@types1.Class1<strong class="caret"></strong></a>
+            <ul class="dropdown-menu" role="menu">
+                @foreach (var types2 in Model.Types2)
+                    {
+                        if (types2.Class1 == types1.Class1)
+                        {
+                <li class="menu-item dropdown dropdown-submenu">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">@types2.Class2</a>
+                    <ul class="dropdown-menu">
+                        @foreach (var types3 in Model.Types3)
+                                    {
+                                        if (types3.Class2 == types2.Class2)
+                                        {
+                            <li>
+                                @Html.ActionLink(types3.Class3, "GoodsList", "Home", new { allGoods = "False", type3 = @types3.Class3 }, null)
+                            </li>
+                                        }
+                                    }
+                    </ul>
+                </li>
+                        }
+                    }
+            </ul>
+        </div>
         }
+    </div>
+</div>
+<div class="col-md-1 column"></div>
+<div class="col-md-8 column">
+    <div class="panel-group">
+        @foreach (var good in Model.Good)
+        {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a class="panel-title" href="#panel-element-@good.GoodID.ToString().Trim()" data-toggle="collapse">
+                    @{
+            double price = 0;
+            string market = "USTC";
+            foreach (var inventory in @good.Inventories)
+            {
+                price = (double)inventory.Price;
+                market = inventory.MarketName;
             }
-            @price
+                    }
+                    ￥@price：@good.GoodName
+                </a>
+            </div>
+            <div class="panel-collapse collapse in" id="panel-element-@good.GoodID.ToString().Trim()">
+                <div class="panel-body">
+                    @Html.ActionLink(" 添加到购物车", "AddGood", "Account", new { GoodID = @good.GoodID, Market = @market }, null)
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <ul class="pagination">
+        @if (@Model.CurrentPage != 1)
+        {
+            <li>
+                @Html.ActionLink("第一页", "GoodFirstPage", "Home")
+            </li>
+            <li>
+                @Html.ActionLink("上一页", "GoodPreviousPage", "Home")
+            </li>
+        }
+        <li>
+            <a href="#">
+                当前页：@Model.CurrentPage
+            </a>
         </li>
         <li>
-            @Html.ActionLink(" 添加到购物车", "AddGood", "Account", new { GoodID = @goods.GoodID, Market = @market }, null)
+            <a href="#">
+                总页数：@Model.PageNumber
+            </a>
         </li>
-    }
-</ul>
-<ul>
-    <li>
-        当前页数：@Model.CurrentPage
-    </li>
-    <li>
-        总页数：@Model.PageNumber
-    </li>
-    @if (@Model.CurrentPage != 1)
-    {
-        <li>
-            @Html.ActionLink("第一页", "GoodFirstPage", "Home")
-        </li>
-        <li>
-            @Html.ActionLink("上一页", "GoodPreviousPage", "Home")
-        </li>
-    }
-    @if (@Model.CurrentPage != @Model.PageNumber)
-    {
-        <li>
-            @Html.ActionLink("下一页", "GoodNextPage", "Home")
-        </li>
-        <li>
-            @Html.ActionLink("最后一页", "GoodLastPage", "Home")
-        </li>
-    }
-</ul>
+        @if (@Model.CurrentPage != @Model.PageNumber)
+        {
+            <li>
+                @Html.ActionLink("下一页", "GoodNextPage", "Home")
+            </li>
+            <li>
+                @Html.ActionLink("最后一页", "GoodLastPage", "Home")
+            </li>
+        }
+    </ul>
+</div>

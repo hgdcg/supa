@@ -5,34 +5,38 @@
     ViewBag.LogInState = Session["LogInState"];
     ViewBag.User = Session["User"];
 }
-<ul>
-    @foreach (var types1 in Model.Types1)
-    {
-        <li>
-            一级分类：@types1.Class1
-            <ul>
-                @foreach (var types2 in Model.Types2)
-                {
-                    if (types2.Class1 == types1.Class1)
+
+<div class="col-md-3 column">
+    <div class="list-group">
+        @foreach (var types1 in Model.Types1)
+        {
+            <div class="list-group-item dropdown">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">@types1.Class1<strong class="caret"></strong></a>
+                <ul class="dropdown-menu" role="menu">
+                    @foreach (var types2 in Model.Types2)
                     {
-                        <li>
-                            二级分类：@types2.Class2
-                            <ul>
-                                @foreach (var types3 in Model.Types3)
-                                {
-                                    if (types3.Class2 == types2.Class2)
+                        if (types2.Class1 == types1.Class1)
+                        {
+                            <li class="menu-item dropdown dropdown-submenu">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">@types2.Class2</a>
+                                <ul class="dropdown-menu">
+                                    @foreach (var types3 in Model.Types3)
                                     {
-                                        <li>
-                                            三级分类：
-                                        @Html.ActionLink(types3.Class3, "GoodsList", "Home", new { allGoods="False", type3 =@types3.Class3}, null)
-                                        </li>
+                                        if (types3.Class2 == types2.Class2)
+                                        {
+                                    <li>
+                                        @Html.ActionLink(types3.Class3, "GoodsList", "Home", new { allGoods = "False", type3 = @types3.Class3 }, null)
+                                    </li>
+                                        }
                                     }
-                                }
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                        }
                     }
-                }
-            </ul>
-        </li>
-    }
-</ul>
+                </ul>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-md-1 column"></div>
+<div class="col-md-8 column"></div>

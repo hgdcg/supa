@@ -134,7 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\MetroUICSSBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -194,25 +193,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\metro-ui\css\iconFont.min.css" />
-    <Content Include="Content\metro-ui\css\metro-bootstrap-responsive.css" />
-    <Content Include="Content\metro-ui\css\metro-bootstrap-responsive.min.css" />
-    <Content Include="Content\metro-ui\css\metro-bootstrap.css" />
-    <Content Include="Content\metro-ui\css\metro-bootstrap.min.css" />
-    <Content Include="Content\metro-ui\fonts\iconFont.dev.svg" />
-    <Content Include="Content\metro-ui\fonts\iconFont.svg" />
-    <Content Include="Content\metro-ui\fonts\metroSysIcons.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\metro-ui\fonts\metroSysIcons.woff" />
-    <Content Include="Content\metro-ui\fonts\metroSysIcons.ttf" />
-    <Content Include="Content\metro-ui\fonts\iconFont.woff" />
-    <Content Include="Content\metro-ui\fonts\iconFont.ttf" />
-    <Content Include="Content\metro-ui\fonts\iconFont.json" />
-    <Content Include="Content\metro-ui\fonts\iconFont.eot" />
     <EntityDeploy Include="Models\SupaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SupaModel.Designer.cs</LastGenOutput>
@@ -230,6 +213,11 @@
       <DependentUpon>SupaModel.edmx</DependentUpon>
       <LastGenOutput>SupaModel.cs</LastGenOutput>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -241,8 +229,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\metro-ui\jquery.ui.widget.js" />
-    <Content Include="Scripts\metro-ui\metro.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
@@ -274,9 +260,6 @@
     <Folder Include="Views\General\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
