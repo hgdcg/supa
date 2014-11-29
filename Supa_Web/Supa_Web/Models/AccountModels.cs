@@ -43,4 +43,13 @@ namespace Supa_Web.Models
         [Compare("Password", ErrorMessage = "确认密码与密码不相符")]
         public String ConfirmPassword { get; set; }
     }
+
+    public class ChangePasswordModel{
+        [Required(ErrorMessage = "旧密码不能为空")]
+        public String OldPassword { get; set; }
+        [Required(ErrorMessage = "新密码不能为空")]
+        public String NewPassword { get; set; }
+        [Compare("NewPassword", ErrorMessage = "确认密码与密码不相符")]
+        public String ConfirmPassword { get; set; }
+    }
 }

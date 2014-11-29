@@ -264,9 +264,10 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Cart.cshtml" />
-    <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Account\AccountManagement.cshtml" />
     <Content Include="Views\Home\GoodsList.cshtml" />
     <Content Include="Views\Home\GoodInfo.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -137,7 +137,7 @@ namespace Supa_Web.Controllers
                     model.TotalAmount += (double)order.Inventory.Price * (double)order.Amount;
                 }
 
-                model.PageNumber = (int)Math.Ceiling((double)(query.Count() / model.PageLength));
+                model.PageNumber = (int)Math.Ceiling((double)query.Count() / (double)model.PageLength);
                 var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
                 model.Orders.Clear();
                 foreach (Order order in result)
@@ -204,7 +204,7 @@ namespace Supa_Web.Controllers
             {
                 var query = from order in db.Orders
                             where order.UserId == user.UserId
-                            where order.GoodID == GoodName
+                            where order.Inventory.Good.GoodName == GoodName
                             select order;
                 foreach (var order in query)
                 {
@@ -216,40 +216,42 @@ namespace Supa_Web.Controllers
             }
             return RedirectToAction("Cart", "Account");
         }
+
         [AllowAnonymous]
-        public ActionResult AddGood(String GoodID,string Market)
+        public ActionResult AddGood(String GoodID, string Market)
         {
             User user = (User)Session["User"];
-            if(user==null)
+            if (user == null)
             {
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Index", "Home");
             }
             var db = new Entities();
             var query = from order in db.Orders
-                        where order.User.UserId == user.UserId 
+                        where order.User.UserId == user.UserId
                         where order.GoodID == GoodID
-                        select order ;
-            if(query.Count()>0)
+                        select order;
+            if (query.Count() > 0)
             {
-             foreach(Order order in query)
-             {
-                 int temp = (int)order.Amount;
-                 order.Amount= temp+1;
-             }
-              
+                foreach (Order order in query)
+                {
+                    int temp = (int)order.Amount;
+                    order.Amount = temp + 1;
+                }
+
             }
             else
             {
-            Order order = new Order();
-            order.GoodID = GoodID;
-            order.UserId = ((User)Session["User"]).UserId;
-            order.MarketName = Market;
-            order.Amount = 1;
-            db.Orders.Add(order);
+                Order order = new Order();
+                order.GoodID = GoodID;
+                order.UserId = ((User)Session["User"]).UserId;
+                order.MarketName = Market;
+                order.Amount = 1;
+                db.Orders.Add(order);
             }
             db.SaveChanges();
             return RedirectToAction("Cart", "Account");
         }
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult ChangePassword()
@@ -258,8 +260,34 @@ namespace Supa_Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
             return View();
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            using (var db = new Entities())
+            {
+                User currentUser = (User)Session["User"];
+                var query = from user in db.Users
+                            where user.UserId == currentUser.UserId && user.Password == currentUser.Password
+                            select user;
+                foreach (var user in query)
+                {
+                    user.Password = model.NewPassword;
+                    break;
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult AccountManagement()
+        {
+            return View();
+        }
+
     }
 }

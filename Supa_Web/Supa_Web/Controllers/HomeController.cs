@@ -51,16 +51,26 @@ namespace Supa_Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult GoodsList(string class3)
+        // Here we define allGoods as String because Boolean can never be null
+        public ActionResult GoodsList(String allGoods, string type3)
         {
             GoodsListModel model = new GoodsListModel();
-            if (TempData["GoodsListModel"] != null)
+            if (allGoods != null)
             {
-                model = (GoodsListModel)TempData["GoodsListModel"];
+                // Here means we clicked "All Goods"
+                if (allGoods == "True")
+                    TempData["GoodType"] = null;
+                //Here means we clicked a specific type
+                else
+                    TempData["GoodType"] = type3;
             }
-            if (TempData["GoodPage"] != null)
+            // We came here by paging
+            else
             {
-                model.CurrentPage = (int)TempData["GoodPage"];
+                if (TempData["GoodPage"] != null)
+                    model.CurrentPage = (int)TempData["GoodPage"];
+                if (TempData["GoodType"] != null)
+                    type3 = (String)TempData["GoodType"];
             }
 
             using (var db = new Entities())
@@ -71,47 +81,67 @@ namespace Supa_Web.Controllers
                 {
                     model.Types1.Add(types1);
                 }
-
                 var query2 = from types2 in db.Types2
                              select types2;
                 foreach (Types2 types2 in query2)
                 {
                     model.Types2.Add(types2);
                 }
-
                 var query3 = from types3 in db.Types3
                              select types3;
                 foreach (Types3 types3 in query3)
                 {
                     model.Types3.Add(types3);
                 }
-                var query = from goods in db.Goods
-                                where goods.Class3 == class3
+
+                if (type3 == null)
+                {
+                    var query = from goods in db.Goods
                                 orderby goods.GoodID
-                                select goods; 
-                if(class3==null)
-                {
-                     query = from goods in db.Goods                            
-                            orderby goods.GoodID
-                            select goods;
-                }              
-                model.PageNumber = (int)Math.Ceiling((double)(query.Count() / model.PageLength));
-                var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
-                model.Good.Clear();
-                foreach (Good goods in result)
-                {
-                    model.Good.Add(goods);
-                    foreach (Inventory inventory in goods.Inventories)
+                                select goods;
+                    model.PageNumber = (int)Math.Ceiling((double)query.Count() / (double)model.PageLength);
+                    var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
+                    model.Good.Clear();
+                    foreach (Good goods in result)
                     {
-                        model.Prices.Add((double)inventory.Price);
+                        model.Good.Add(goods);
+                        foreach (Inventory inventory in goods.Inventories)
+                        {
+                            model.Prices.Add((double)inventory.Price);
+                        }
                     }
                 }
+                else
+                {
+                    var query = from goods in db.Goods
+                                where goods.Class3 == type3
+                                orderby goods.GoodID
+                                select goods;
+                    model.PageNumber = (int)Math.Ceiling((double)query.Count() / (double)model.PageLength);
+                    var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
+                    model.Good.Clear();
+                    foreach (Good good in result)
+                    {
+                        model.Good.Add(good);
+                        foreach (Inventory inventory in good.Inventories)
+                        {
+                            model.Prices.Add((double)inventory.Price);
+                        }
+                    }
+                }
+
+                if (model.PageNumber < model.CurrentPage)
+                {
+                    model.CurrentPage = 1;
+                }
             }
+
             TempData["GoodPage"] = model.CurrentPage;
             TempData["GoodPageNumber"] = model.PageNumber;
+            TempData["GoodType"] = type3;
             return View(model);
         }
-      
+
         [AllowAnonymous]
         public ActionResult GoodFirstPage()
         {

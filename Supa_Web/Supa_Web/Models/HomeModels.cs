@@ -37,5 +37,6 @@ namespace Supa_Web.Models
         public int CurrentPage { get; set; }
         public int PageLength { get; set; }
         public int PageNumber { get; set; }
+        public String TypeName { get; set; }
     }
 }
