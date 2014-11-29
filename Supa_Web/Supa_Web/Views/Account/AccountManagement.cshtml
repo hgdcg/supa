@@ -2,9 +2,8 @@
     ViewBag.Title = "账户管理";
     ViewBag.LogInState = Session["LogInState"];
     ViewBag.User = Session["User"];
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>账户管理</h2>
-
-@Html.ActionLink("修改密码", "ChangePassword", "Account")
+<div class="col-md-12">
+<button onclick="location.href='@Url.Action("ChangePassword", "Account")'" class="btn btn-primary">修改密码</button>
+</div>

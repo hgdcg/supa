@@ -17,20 +17,20 @@
                     {
                         if (types2.Class1 == types1.Class1)
                         {
-                <li class="menu-item dropdown dropdown-submenu">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">@types2.Class2</a>
-                    <ul class="dropdown-menu">
-                        @foreach (var types3 in Model.Types3)
+                    <li class="menu-item dropdown dropdown-submenu">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">@types2.Class2</a>
+                        <ul class="dropdown-menu">
+                            @foreach (var types3 in Model.Types3)
                                     {
                                         if (types3.Class2 == types2.Class2)
                                         {
-                            <li>
-                                @Html.ActionLink(types3.Class3, "GoodsList", "Home", new { allGoods = "False", type3 = @types3.Class3 }, null)
-                            </li>
+                                    <li>
+                                        @Html.ActionLink(types3.Class3, "GoodsList", "Home", new { allGoods = "False", type3 = @types3.Class3 }, null)
+                                    </li>
                                         }
                                     }
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
                         }
                     }
             </ul>
@@ -69,31 +69,49 @@
     <ul class="pagination">
         @if (@Model.CurrentPage != 1)
         {
-            <li>
-                @Html.ActionLink("第一页", "GoodFirstPage", "Home")
-            </li>
-            <li>
-                @Html.ActionLink("上一页", "GoodPreviousPage", "Home")
-            </li>
-        }
         <li>
+            @Html.ActionLink("第一页", "GoodFirstPage", "Home")
+        </li>
+        <li>
+            @Html.ActionLink("上一页", "GoodPreviousPage", "Home")
+        </li>
+        }
+        else
+        {
+        <li class="disabled">
+            <a href="#">第一页</a>
+        </li>
+        <li class="disabled">
+            <a href="#">上一页</a>
+        </li>
+        }
+        <li class="disabled">
             <a href="#">
                 当前页：@Model.CurrentPage
             </a>
         </li>
-        <li>
+        <li class="disabled">
             <a href="#">
                 总页数：@Model.PageNumber
             </a>
         </li>
         @if (@Model.CurrentPage != @Model.PageNumber)
         {
-            <li>
-                @Html.ActionLink("下一页", "GoodNextPage", "Home")
-            </li>
-            <li>
-                @Html.ActionLink("最后一页", "GoodLastPage", "Home")
-            </li>
+        <li>
+            @Html.ActionLink("下一页", "GoodNextPage", "Home")
+        </li>
+        <li>
+            @Html.ActionLink("最后一页", "GoodLastPage", "Home")
+        </li>
+        }
+        else
+        {
+        <li class="disabled">
+            <a href="#">下一页</a>
+        </li>
+        <li class="disabled">
+            <a href="#">最后一页</a>
+        </li>
         }
     </ul>
 </div>
