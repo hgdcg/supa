@@ -266,12 +266,21 @@ namespace Supa_Web.Controllers
         [AllowAnonymous]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             using (var db = new Entities())
             {
                 User currentUser = (User)Session["User"];
                 var query = from user in db.Users
-                            where user.UserId == currentUser.UserId && user.Password == currentUser.Password
+                            where user.UserId == currentUser.UserId && user.Password == model.OldPassword
                             select user;
+                if (query.Count() == 0)
+                {
+                    ModelState.AddModelError("OldPassword", "原密码错误");
+                    return View();
+                }
                 foreach (var user in query)
                 {
                     user.Password = model.NewPassword;
