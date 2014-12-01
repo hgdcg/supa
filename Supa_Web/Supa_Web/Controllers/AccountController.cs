@@ -140,6 +140,8 @@ namespace Supa_Web.Controllers
                 }
 
                 model.PageNumber = (int)Math.Ceiling((double)query.Count() / (double)model.PageLength);
+                if (model.PageNumber == 0)
+                    model.PageNumber = 1;
                 var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
                 model.Orders.Clear();
                 foreach (Order order in result)

@@ -100,6 +100,8 @@ namespace Supa_Web.Controllers
                                 orderby goods.GoodID
                                 select goods;
                     model.PageNumber = (int)Math.Ceiling((double)query.Count() / (double)model.PageLength);
+                    if (model.PageNumber == 0)
+                        model.PageNumber = 1;
                     var result = query.Skip(model.PageLength * (model.CurrentPage - 1)).Take(model.PageLength);
                     model.Good.Clear();
                     foreach (Good goods in result)
