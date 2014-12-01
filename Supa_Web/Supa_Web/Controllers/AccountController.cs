@@ -47,6 +47,8 @@ namespace Supa_Web.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
+                else
+                    ModelState.AddModelError("UserName", "用户名或密码错误");
                 return View();
             }
         }
