@@ -4,32 +4,46 @@
     ViewBag.Title = "购物车";
     ViewBag.LogInState = Session["LogInState"];
     ViewBag.User = Session["User"];
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="col-md-3 column"></div>
 <div class="col-md-1 column"></div>
 <div class="col-md-8 column">
-    <h1>￥：@Model.TotalAmount</h1>
+    <h1>总金额：￥@Model.TotalAmount</h1>
     <div class="panel-group">
         @foreach (var order in Model.Orders)
         {
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <a class="panel-title" href="#panel-element-@order.GoodID.ToString().Trim()" data-toggle="collapse">
-                        商品名：@order.Inventory.Good.GoodName
+                        @order.Inventory.Good.GoodName
                     </a>
-                </div>
-                <div class="panel-collapse collapse in" id="panel-element-@order.GoodID.ToString().Trim()">
-                    <div class="panel-body">
-                        数量：@order.Amount
+                    <div class="pull-right">
                         @if (order.Amount != 1)
                         {
-                            @Html.ActionLink("数量减一", "ChangeOrderNumber", "Account", new { Plus = false, GoodName = @order.Inventory.Good.GoodName }, new { @class = "btn btn-primary" })
+                            <button type="button" class="btn btn-primary btn-sm" , onclick="location.href='@Url.Action("ChangeOrderNumber", "Account", new { Plus = false, GoodName = @order.Inventory.Good.GoodName })'">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
                         }
-                        @Html.ActionLink("数量加一", "ChangeOrderNumber", "Account", new { Plus = true, GoodName = @order.Inventory.Good.GoodName }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("删除", "CartDelete", "Account", new { GoodName = @order.Inventory.Good.GoodName }, new { @class = "btn btn-primary" })
+                        else
+                        {
+                            <button type="button" class="btn btn-primary btn-sm disabled">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        }
+                        <span class="badge">
+                            @order.Amount
+                        </span>
+                        <button type="button" class="btn btn-primary btn-sm" , onclick="location.href='@Url.Action("ChangeOrderNumber", "Account", new { Plus = true, GoodName = @order.Inventory.Good.GoodName })'">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" , onclick="location.href='@Url.Action("CartDelete", "Account", new { GoodName = @order.Inventory.Good.GoodName })'">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
                     </div>
+                </div>
+                <div class="panel-collapse collapse in" id="panel-element-@order.GoodID.ToString().Trim()">
+                    <img src="~/Content/img/@(order.GoodID.ToString().Trim()).jpg" />
                 </div>
             </div>
         }
@@ -38,21 +52,21 @@
     <ul class="pagination">
         @if (@Model.CurrentPage != 1)
         {
-        <li>
-            @Html.ActionLink("第一页", "CartFirstPage", "Account")
-        </li>
-        <li>
-            @Html.ActionLink("上一页", "CartPreviousPage", "Account")
-        </li>
+            <li>
+                @Html.ActionLink("第一页", "CartFirstPage", "Account")
+            </li>
+            <li>
+                @Html.ActionLink("上一页", "CartPreviousPage", "Account")
+            </li>
         }
         else
         {
-        <li class="disabled">
-            <a href="#">第一页</a>
-        </li>
-        <li class="disabled">
-            <a href="#">上一页</a>
-        </li>
+            <li class="disabled">
+                <a href="#">第一页</a>
+            </li>
+            <li class="disabled">
+                <a href="#">上一页</a>
+            </li>
         }
         <li class="disabled">
             <a href="#">
@@ -66,21 +80,21 @@
         </li>
         @if (@Model.CurrentPage != @Model.PageNumber)
         {
-        <li>
-            @Html.ActionLink("下一页", "CartNextPage", "Account")
-        </li>
-        <li>
-            @Html.ActionLink("最后一页", "CartLastPage", "Account")
-        </li>
+            <li>
+                @Html.ActionLink("下一页", "CartNextPage", "Account")
+            </li>
+            <li>
+                @Html.ActionLink("最后一页", "CartLastPage", "Account")
+            </li>
         }
         else
         {
-        <li class="disabled">
-            <a href="#">下一页</a>
-        </li>
-        <li class="disabled">
-            <a href="#">最后一页</a>
-        </li>
+            <li class="disabled">
+                <a href="#">下一页</a>
+            </li>
+            <li class="disabled">
+                <a href="#">最后一页</a>
+            </li>
         }
     </ul>
 </div>

@@ -4,7 +4,6 @@
     ViewBag.Title = "登录";
     ViewBag.LogInState = Session["LogInState"];
     ViewBag.User = Session["User"];
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="col-md-4">
@@ -13,12 +12,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, "用户名")
             @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Password, "密码")
             @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
         </div>
         <input class="btn btn-primary" type="submit" value="登录" />
     }

@@ -152,6 +152,12 @@ namespace Supa_Web.Controllers
             return View(model);
         }
         [AllowAnonymous]
+        public ActionResult CartClicked()
+        {
+            TempData["CartPage"] = 1;
+            return RedirectToAction("Cart", "Account");
+        }
+        [AllowAnonymous]
         public ActionResult CartFirstPage()
         {
             TempData["CartPage"] = 1;
