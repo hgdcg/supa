@@ -185,3 +185,4 @@ FakesAssemblies/
 # Customized
 ref/
 img/
+*.jar
