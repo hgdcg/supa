@@ -1,6 +1,7 @@
 package ustc.supa;
 
 import java.util.List;
+import java.lang.Math;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -24,27 +25,23 @@ public class MainActivity extends Activity {
         String wserviceName = Context.WIFI_SERVICE;
         WifiManager wm = (WifiManager) getSystemService(wserviceName);
 
-        WifiInfo info = wm.getConnectionInfo();
-        int strength = info.getRssi();
-        int speed = info.getLinkSpeed();
-        String units = WifiInfo.LINK_SPEED_UNITS;
-        String ssid = info.getSSID();
-
-        tv  = (TextView) findViewById(R.id.textView1);
+        tv = (TextView) findViewById(R.id.textView1);
 
         List<ScanResult> results = wm.getScanResults();
         String otherwifi = "The existing network is: \n\n";
 
         for (ScanResult result : results) {
-            otherwifi += result.SSID  + ":" + result.level + "\n";
+            if (!result.SSID.equals("")) {
+                otherwifi += result.SSID + ":" + result.level + "\n";
+                otherwifi += "Frequency: " + result.frequency + "\n";
+                otherwifi += "Distance: " + GetDistance(result.level, result.frequency) + "\n";
+            }
+            otherwifi+="\n";
         }
 
-        String text = "We are connecting to " + ssid + " at " + String.valueOf(speed) + "   " + String.valueOf(units) + ". Strength : " + strength;
         otherwifi += "\n\n";
-        otherwifi += text;
 
         tv.setText(otherwifi);
-
     }
 
 
@@ -55,5 +52,16 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    // Here we assume the transmitting power of APs are 50mW.
+    private double DBmToW(int dbm) {
+        dbm-=30;
+        double temp=(double)dbm/10;
+        return Math.pow(10, temp);
+    }
+
+    private double GetDistance(int dbm, int frequency){
+        double Pr=DBmToW(dbm);
+        return 1.34/Math.sqrt(Pr)/frequency;
+    }
 }
 

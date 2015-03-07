@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Supa_app.iml" filepath="$PROJECT_DIR$/Supa_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Supa_App.iml" filepath="$PROJECT_DIR$/Supa_App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
