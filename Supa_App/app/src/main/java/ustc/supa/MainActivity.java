@@ -36,14 +36,13 @@ public class MainActivity extends Activity {
                 otherwifi += "Frequency: " + result.frequency + "\n";
                 otherwifi += "Distance: " + GetDistance(result.level, result.frequency) + "\n";
             }
-            otherwifi+="\n";
+            otherwifi += "\n";
         }
 
         otherwifi += "\n\n";
 
         tv.setText(otherwifi);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,14 +53,14 @@ public class MainActivity extends Activity {
 
     // Here we assume the transmitting power of APs are 50mW.
     private double DBmToW(int dbm) {
-        dbm-=30;
-        double temp=(double)dbm/10;
+        dbm -= 30;
+        double temp = (double) dbm / 10;
         return Math.pow(10, temp);
     }
 
-    private double GetDistance(int dbm, int frequency){
-        double Pr=DBmToW(dbm);
-        return 1.34/Math.sqrt(Pr)/frequency;
+    private double GetDistance(int dbm, int frequency) {
+        double Pr = DBmToW(dbm);
+        return 1.34 / Math.sqrt(Pr) / frequency;
     }
 }
 
