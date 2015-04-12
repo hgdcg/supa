@@ -22,7 +22,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:text="@string/userlogin"
+            android:text="@string/logIn"
             android:onClick="logIn" />
 
         <Button
@@ -30,7 +30,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_marginRight="10dp"
-            android:text="@string/newuser" />
+            android:text="@string/register"
+            android:onClick="register" />
     </LinearLayout>
 
     <Button
