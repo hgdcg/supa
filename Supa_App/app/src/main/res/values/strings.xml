@@ -25,5 +25,6 @@
     <string name="email_address">邮箱：</string>
     <string name="input_email">email</string>
     <string name="search">搜索商品</string>
+    <string name="title_activity_log_in">LogInActivity</string>
 
 </resources>

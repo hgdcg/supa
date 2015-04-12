@@ -22,7 +22,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:text="@string/userlogin" />
+            android:text="@string/userlogin"
+            android:onClick="logIn" />
 
         <Button
             android:layout_width="fill_parent"
